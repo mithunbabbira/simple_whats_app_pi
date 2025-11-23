@@ -1,6 +1,0 @@
-2025/11/23-14:51:24.784 1a8b Reusing MANIFEST /home/mithun/projects/whatsapp/new_whatsapp/api-server/.wwebjs_auth/session/Default/Local Storage/leveldb/MANIFEST-000001
-2025/11/23-14:51:24.786 1a8b Recovering log #4
-2025/11/23-14:51:24.786 1a8b Reusing old log /home/mithun/projects/whatsapp/new_whatsapp/api-server/.wwebjs_auth/session/Default/Local Storage/leveldb/000004.log 
-2025/11/23-14:53:25.335 1a8b Level-0 table #8: started
-2025/11/23-14:53:25.342 1a8b Level-0 table #8: 15792 bytes OK
-2025/11/23-14:53:25.345 1a8b Delete type=0 #4

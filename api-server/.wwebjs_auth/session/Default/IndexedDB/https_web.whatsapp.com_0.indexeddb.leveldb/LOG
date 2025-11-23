@@ -1,11 +1,13 @@
-2025/11/23-14:51:25.450 1a94 Reusing MANIFEST /home/mithun/projects/whatsapp/new_whatsapp/api-server/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/11/23-14:51:25.454 1a94 Recovering log #518
-2025/11/23-14:51:25.485 1a94 Reusing old log /home/mithun/projects/whatsapp/new_whatsapp/api-server/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000518.log 
-2025/11/23-14:51:27.277 1a90 Level-0 table #523: started
-2025/11/23-14:51:27.298 1a90 Level-0 table #523: 296816 bytes OK
-2025/11/23-14:51:27.304 1a90 Delete type=0 #518
-2025/11/23-14:51:27.304 1a89 Manual compaction at level-0 from '\x00\xb6\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\xb7\x00\x00\x00' @ 0 : 0; will stop at (end)
-2025/11/23-14:51:29.980 1a8b Compacting 1@1 + 1@2 files
-2025/11/23-14:51:30.040 1a8b Generated table #524@1: 22563 keys, 907893 bytes
-2025/11/23-14:51:30.041 1a8b Compacted 1@1 + 1@2 files => 907893 bytes
-2025/11/23-14:51:30.043 1a8b compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/11/23-16:53:25.675 f91 Reusing MANIFEST /home/mithun/projects/whatsapp/new_whatsapp/api-server/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/11/23-16:53:25.676 f91 Recovering log #526
+2025/11/23-16:53:25.683 f91 Reusing old log /home/mithun/projects/whatsapp/new_whatsapp/api-server/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000526.log 
+2025/11/23-16:53:30.853 f91 Level-0 table #531: started
+2025/11/23-16:53:30.868 f91 Level-0 table #531: 147915 bytes OK
+2025/11/23-16:53:30.876 f91 Delete type=0 #526
+2025/11/23-16:53:30.878 f91 Manual compaction at level-0 from '\x00\xb8\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\xb9\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/11/23-16:53:33.503 fa4 Compacting 1@1 + 1@2 files
+2025/11/23-16:53:33.584 fa4 Generated table #532@1: 24897 keys, 1002740 bytes
+2025/11/23-16:53:33.584 fa4 Compacted 1@1 + 1@2 files => 1002740 bytes
+2025/11/23-16:53:33.588 fa4 compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/11/23-16:53:33.589 fa4 Delete type=2 #528
+2025/11/23-16:53:33.589 fa4 Delete type=2 #531

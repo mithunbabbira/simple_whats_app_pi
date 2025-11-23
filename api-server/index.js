@@ -1,5 +1,5 @@
 const express = require('express');
-const { initializeClient, getQrCode, sendMessage, getStatus } = require('./client');
+const { initializeClient, getQrCode, sendMessage, getStatus, destroyClient } = require('./client');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -35,6 +35,31 @@ app.get('/status', (req, res) => {
     res.json(getStatus());
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+// Graceful shutdown
+const gracefulShutdown = async (signal) => {
+    console.log(`\n${signal} received. Starting graceful shutdown...`);
+
+    // Stop accepting new connections
+    server.close(async () => {
+        console.log('HTTP server closed');
+
+        // Destroy WhatsApp client
+        await destroyClient();
+
+        console.log('Graceful shutdown complete');
+        process.exit(0);
+    });
+
+    // Force shutdown after 10 seconds
+    setTimeout(() => {
+        console.error('Forced shutdown after timeout');
+        process.exit(1);
+    }, 10000);
+};
+
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));

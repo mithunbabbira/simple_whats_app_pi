@@ -1,3 +1,4 @@
-2025/11/23-14:11:01.510 4ad Reusing MANIFEST /home/mithun/projects/whatsapp/new_whatsapp/api-server/.wwebjs_auth/session/Default/Site Characteristics Database/MANIFEST-000001
-2025/11/23-14:11:01.511 4ad Recovering log #6
-2025/11/23-14:11:01.511 4ad Reusing old log /home/mithun/projects/whatsapp/new_whatsapp/api-server/.wwebjs_auth/session/Default/Site Characteristics Database/000006.log 
+2025/11/23-17:01:13.684 1ab2 Table #7: 2 entries OK
+2025/11/23-17:01:13.685 1ab2 Table #4: 2 entries OK
+2025/11/23-17:01:13.685 1ab2 Archiving /home/mithun/projects/whatsapp/new_whatsapp/api-server/.wwebjs_auth/session/Default/Site Characteristics Database/MANIFEST-000001: OK
+2025/11/23-17:01:13.690 1ab2 **** Repaired leveldb /home/mithun/projects/whatsapp/new_whatsapp/api-server/.wwebjs_auth/session/Default/Site Characteristics Database; recovered 2 files; 381 bytes. Some data may have been lost. ****

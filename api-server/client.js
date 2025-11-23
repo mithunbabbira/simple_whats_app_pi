@@ -24,15 +24,20 @@ const client = new Client({
     }
 });
 
+let clientState = 'initializing'; // 'initializing', 'ready', 'disconnected', 'auth_failed'
+let reconnectTimeout = null;
+
 client.on('qr', (qr) => {
     console.log('QR RECEIVED', qr);
     qrCodeData = qr;
     clientReady = false;
+    clientState = 'qr_scan_needed';
 });
 
 client.on('ready', () => {
     console.log('Client is ready!');
     clientReady = true;
+    clientState = 'ready';
     qrCodeData = null; // Clear QR code once ready
 });
 
@@ -43,16 +48,37 @@ client.on('authenticated', () => {
 client.on('auth_failure', msg => {
     console.error('AUTHENTICATION FAILURE', msg);
     clientReady = false;
+    clientState = 'auth_failed';
 });
 
 client.on('disconnected', (reason) => {
     console.log('Client was logged out', reason);
     clientReady = false;
-    // Re-initialize client to allow new login or reconnection
-    client.initialize();
+    clientState = 'disconnected';
+
+    // Clear any pending reconnect
+    if (reconnectTimeout) {
+        clearTimeout(reconnectTimeout);
+    }
+
+    // Debounced reconnection to prevent race conditions
+    reconnectTimeout = setTimeout(() => {
+        if (clientState === 'disconnected') {
+            console.log('Attempting to reconnect...');
+            clientState = 'initializing';
+            client.initialize();
+        }
+    }, 2000); // Wait 2 seconds before reconnecting
+});
+
+// Critical: Handle errors to prevent crashes
+client.on('error', (error) => {
+    console.error('WhatsApp Client Error:', error);
+    // Don't crash the server, just log the error
 });
 
 const initializeClient = () => {
+    clientState = 'initializing';
     client.initialize();
 };
 
@@ -72,10 +98,48 @@ const getQrCode = async () => {
     return { status: 'waiting', message: 'Waiting for QR code' };
 };
 
+// Event-based waiting to prevent memory leaks
+const waitForReady = (timeoutMs = 60000) => {
+    return new Promise((resolve, reject) => {
+        if (clientReady) {
+            return resolve();
+        }
+
+        const timeout = setTimeout(() => {
+            cleanup();
+            reject(new Error('Timeout waiting for client to be ready'));
+        }, timeoutMs);
+
+        const onReady = () => {
+            cleanup();
+            resolve();
+        };
+
+        const onAuthFailure = () => {
+            cleanup();
+            reject(new Error('Authentication failed'));
+        };
+
+        const cleanup = () => {
+            clearTimeout(timeout);
+            client.removeListener('ready', onReady);
+            client.removeListener('auth_failure', onAuthFailure);
+        };
+
+        client.once('ready', onReady);
+        client.once('auth_failure', onAuthFailure);
+    });
+};
+
 const sendMessage = async (number, message) => {
     if (!clientReady) {
-        const status = qrCodeData ? 'Waiting for QR scan' : 'Initializing';
-        throw new Error(`Client is not ready. Status: ${status}`);
+        console.log('Client not ready, waiting for initialization...');
+        try {
+            await waitForReady();
+        } catch (error) {
+            const status = qrCodeData ? 'Waiting for QR scan' : 'Initializing';
+            throw new Error(`Client is not ready after waiting. Status: ${status}`);
+        }
     }
     try {
         // Ensure number format (simple check, can be improved)
@@ -91,13 +155,33 @@ const sendMessage = async (number, message) => {
 const getStatus = () => {
     return {
         ready: clientReady,
-        qr_available: !!qrCodeData
+        qr_available: !!qrCodeData,
+        state: clientState
     };
+};
+
+const destroyClient = async () => {
+    console.log('Destroying WhatsApp client...');
+    if (reconnectTimeout) {
+        clearTimeout(reconnectTimeout);
+    }
+    try {
+        await client.destroy();
+        console.log('WhatsApp client destroyed successfully');
+    } catch (error) {
+        // Suppress harmless "Target closed" errors during shutdown
+        if (error.message && error.message.includes('Target closed')) {
+            console.log('WhatsApp client destroyed (browser already closed)');
+        } else {
+            console.error('Error destroying client:', error.message);
+        }
+    }
 };
 
 module.exports = {
     initializeClient,
     getQrCode,
     sendMessage,
-    getStatus
+    getStatus,
+    destroyClient
 };

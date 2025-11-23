@@ -1,0 +1,17 @@
+Server running on port 3001
+
+SIGTERM received. Starting graceful shutdown...
+HTTP server closed
+Destroying WhatsApp client...
+/home/mithun/projects/whatsapp/new_whatsapp/api-server/node_modules/puppeteer-core/lib/cjs/puppeteer/common/LifecycleWatcher.js:95
+            (0, util_js_1.addEventListener)(frameManager.client, Connection_js_1.CDPSessionEmittedEvents.Disconnected, __classPrivateFieldGet(this, _LifecycleWatcher_instances, "m", _LifecycleWatcher_terminate).bind(this, new Error('Navigation failed because browser has disconnected!'))),
+                                                                                                                                                                                                                              ^
+
+Error: Navigation failed because browser has disconnected!
+    at new LifecycleWatcher (/home/mithun/projects/whatsapp/new_whatsapp/api-server/node_modules/puppeteer-core/lib/cjs/puppeteer/common/LifecycleWatcher.js:95:223)
+    at Frame.goto (/home/mithun/projects/whatsapp/new_whatsapp/api-server/node_modules/puppeteer-core/lib/cjs/puppeteer/common/Frame.js:204:25)
+    at CDPPage.goto (/home/mithun/projects/whatsapp/new_whatsapp/api-server/node_modules/puppeteer-core/lib/cjs/puppeteer/common/Page.js:1083:91)
+    at Client.initialize (/home/mithun/projects/whatsapp/new_whatsapp/api-server/node_modules/whatsapp-web.js/src/Client.js:340:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Node.js v20.19.5
