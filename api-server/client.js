@@ -1,11 +1,14 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode');
+const path = require('path');
 
 let qrCodeData = null;
 let clientReady = false;
 
 const client = new Client({
-    authStrategy: new LocalAuth(),
+    authStrategy: new LocalAuth({
+        dataPath: path.join(__dirname, '.wwebjs_auth')
+    }),
     puppeteer: {
         headless: true,
         args: [
@@ -71,7 +74,8 @@ const getQrCode = async () => {
 
 const sendMessage = async (number, message) => {
     if (!clientReady) {
-        throw new Error('Client is not ready');
+        const status = qrCodeData ? 'Waiting for QR scan' : 'Initializing';
+        throw new Error(`Client is not ready. Status: ${status}`);
     }
     try {
         // Ensure number format (simple check, can be improved)
